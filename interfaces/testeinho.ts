@@ -1,0 +1,3 @@
+interface durofoot{
+    name:String
+}
