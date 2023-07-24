@@ -6,6 +6,7 @@ import ImageLoading from "./ImageLoading";
 import "react-responsive-modal/styles.css";
 import { Modal } from "react-responsive-modal";
 
+
 const StyledItem = styled.div`
   width: auto;
   height: auto;
@@ -24,8 +25,15 @@ const StyledContentModal = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
   margin: 20px;
+`;
+const ModalDetailedInformations = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, minmax(50px, 1fr));
+  grid-template-rows: repeat(2, minmax(100px, 1fr));
+`;
+const SingleDetailsModal = styled.div`
+  padding: 10px;
 `;
 
 const SucessSpan = styled.span`
@@ -80,15 +88,32 @@ const Item = ({ item, coin }: { item: Item; coin: number }) => {
           )}
         </div>
       </StyledItem>
-      <Modal open={open} onClose={onCloseModal}>
+      <Modal open={open} onClose={onCloseModal} styles={{modal: {background:"#333232", borderRadius: "15px"}}}>
         <StyledContentModal>
-          <h4>Item name: {item.name}</h4>
+          <h4>{item.name}</h4>
           <ImageLoading
             alt={`${item.name}`}
             href={`${item.icon_url}`}
             width={150}
             height={150}
           />
+          <ModalDetailedInformations>
+            <div>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+              <SingleDetailsModal>Marketable: {}</SingleDetailsModal>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+            </div>
+            <div>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+            </div>
+            <div>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+            </div>
+          </ModalDetailedInformations>
         </StyledContentModal>
       </Modal>
     </>
