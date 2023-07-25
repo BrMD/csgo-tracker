@@ -48,7 +48,8 @@ const ErrorSpan = styled.span`
   color: #ffffff;
 `;
 
-const Item = ({ item, coin }: { item: Item; coin: number }) => {
+const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
+  
   const [price, setPrice] = React.useState<Price>();
   const [open, setOpen] = useState(false);
   const onCloseModal = () => setOpen(false);
@@ -56,6 +57,7 @@ const Item = ({ item, coin }: { item: Item; coin: number }) => {
 
   useEffect(
     function () {
+      if(!item) return;
       const getPrices = async () => {
         const res = await fetch(
           `/api/getPrices/${item.market_name.replaceAll("&", "%26")}`
@@ -65,10 +67,11 @@ const Item = ({ item, coin }: { item: Item; coin: number }) => {
       };
       getPrices();
     },
-    [item.market_name]
+    [item?.market_name, item]
   );
-  if (price) item.price = price;
-
+  if(!item) return;
+  if (price ) item.price = price;
+    
   return (
     <>
       <StyledItem onClick={onOpenModal}>
@@ -92,7 +95,7 @@ const Item = ({ item, coin }: { item: Item; coin: number }) => {
           )}
         </div>
       </StyledItem>
-      <Modal open={open} onClose={onCloseModal} styles={{modal: {background:"#333232", borderRadius: "15px"}}}>
+      <Modal open={open} onClose={onCloseModal} styles={{modal: {background:"#333232", borderRadius: "15px"}, closeButton: {display: "none"}}} >
         <StyledContentModal>
           <h4>{item.name}</h4>
           <ImageLoading

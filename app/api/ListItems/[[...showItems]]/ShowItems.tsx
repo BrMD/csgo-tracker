@@ -7,6 +7,7 @@ import { styled } from "styled-components";
 import Coins from "@/interfaces/coins";
 import { Item as InterfaceItem } from "@/interfaces/item";
 import { sort } from "fast-sort";
+import Button from "@/components/Button";
 
 const StyledItems = styled.div`
   width: 96vw;
@@ -23,7 +24,12 @@ const StyledFixed = styled.div`
   left: 5%;
   top: 1%;
 `;
+const StyledMainDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
+`
 const ShowItems = () => {
   const [itemsCs, setItemsCs] = React.useState<SteamObject>();
   const [coins, setCoins] = React.useState<Coins>();
@@ -32,7 +38,7 @@ const ShowItems = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [orderBy, setOrderBy] = useState("None");
   const [searchByName, setSearchByName] = useState("")
-  const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem>);
+  const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem | undefined>);
 
   const searchParams = useSearchParams();
   const search = searchParams.get("key");
@@ -101,9 +107,25 @@ const ShowItems = () => {
   
   // useEffect(function(){
   //   if (!itemsCs) return;
-    
-
+  //   const arraySearch = itemsSorted.find((item) => {
+  //     if(item?.market_name.includes(searchByName)) return item
+  //   })
+  //   console.log(arraySearch)
+  //   // setItemsSorted(arraySearch)
   //   }, [searchByName])
+  const handleSearchParams = (word:string) => {
+    if(word === null) return;
+    setSearchByName(word);
+  };
+  
+  let arraySearched = [];
+  if (searchByName.length > 0) {
+      arraySearched = itemsSorted.filter((item) => {
+      item?.market_name.match(searchByName);
+  });
+  console.log(arraySearched)
+  }
+  
 
   useEffect(
     function () {
@@ -143,7 +165,8 @@ const ShowItems = () => {
   if (!itemsCs) {
     return <span>No items has been fatched</span>;
   } else {
-    if (!itemsSorted) return;
+    console.log(currentPage)
+    if (!itemsSorted) return <div>No items Found</div>;
 
     let ItemsPerPage = [];
     for (
@@ -155,7 +178,7 @@ const ShowItems = () => {
     }
 
     return (
-      <>
+      <StyledMainDiv>
         {coins?.data && (
           <StyledFixed>
             <select onChange={(e) => setSelectedCoin(e.target.value)}>
@@ -183,24 +206,26 @@ const ShowItems = () => {
               <option value={"LowestPrice"}>LowestPrice</option>
               <option value={"OrderAZ"}>Order Alphabethic Ascending</option>
               <option value={"OrderZA"}>Order Alphabethic Descending</option>
-              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
+              
             </select>
-            <input type="text" onChange={(e) => setSearchByName(e.target.value)}/>
+            <input type="text" onChange={(e) => handleSearchParams(e.target.value)}/>
           </StyledFixed>
         )}
         <StyledItems>
-          {ItemsPerPage[currentPage].map((item, index) => (
+          {
+          ItemsPerPage.length>0?
+          ItemsPerPage[currentPage].map((item, index) => (
             <Item item={item} coin={Number(selectedCoin)} key={index}></Item>
-          ))}
+          )):<></>}
         </StyledItems>
         <div>
           {ItemsPerPage.map((_, index) => (
-            <button key={index} onClick={() => handleCurrentPage(index)}>
+            <Button key={index} index={index} onHandleClick={handleCurrentPage} currentPage={currentPage}>
               {index + 1}
-            </button>
+            </Button>
           ))}
         </div>
-      </>
+      </StyledMainDiv>
     );
   }
 };
