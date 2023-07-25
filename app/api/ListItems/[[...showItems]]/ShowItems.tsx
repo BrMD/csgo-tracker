@@ -31,6 +31,7 @@ const ShowItems = () => {
   const [numberItemsPerPage, setNumberItemsPerPage] = useState(16);
   const [currentPage, setCurrentPage] = useState(0);
   const [orderBy, setOrderBy] = useState("None");
+  const [searchByName, setSearchByName] = useState("")
   const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem>);
 
   const searchParams = useSearchParams();
@@ -43,7 +44,11 @@ const ShowItems = () => {
     setCoins(undefined);
     router.back();
   }
-
+  function handleNumPages(numItemsPages:number){
+    
+    setCurrentPage(0);
+    setNumberItemsPerPage(numItemsPages)
+  }
   function handleCurrentPage(numPage: number) {
     setCurrentPage(numPage);
   }
@@ -93,6 +98,12 @@ const ShowItems = () => {
     },
     [orderBy]
   );
+  
+  // useEffect(function(){
+  //   if (!itemsCs) return;
+    
+
+  //   }, [searchByName])
 
   useEffect(
     function () {
@@ -161,7 +172,7 @@ const ShowItems = () => {
               })}
             </select>
             <button onClick={handleBack}>Back to Home</button>
-            <select onChange={(e) => setNumberItemsPerPage(+e.target.value)}>
+            <select onChange={(e) => handleNumPages(+e.target.value)}>
               <option value={16}>16</option>
               <option value={24}>24</option>
               <option value={32}>32</option>
@@ -174,6 +185,7 @@ const ShowItems = () => {
               <option value={"OrderZA"}>Order Alphabethic Descending</option>
               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
             </select>
+            <input type="text" onChange={(e) => setSearchByName(e.target.value)}/>
           </StyledFixed>
         )}
         <StyledItems>

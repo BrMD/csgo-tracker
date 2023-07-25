@@ -26,16 +26,20 @@ const StyledContentModal = styled.div`
   flex-direction: column;
   align-items: center;
   margin: 20px;
+  
 `;
 const ModalDetailedInformations = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, minmax(50px, 1fr));
-  grid-template-rows: repeat(2, minmax(100px, 1fr));
+  grid-template-columns: repeat(2, minmax(50px, 1fr));
+  
 `;
 const SingleDetailsModal = styled.div`
   padding: 10px;
 `;
-
+const ErrorNoData = styled.div`
+  grid-column-start: 0;
+  grid-column-end: 2;
+`;
 const SucessSpan = styled.span`
   color: #96f022;
 `;
@@ -97,23 +101,22 @@ const Item = ({ item, coin }: { item: Item; coin: number }) => {
             width={150}
             height={150}
           />
-          <ModalDetailedInformations>
-            <div>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-              <SingleDetailsModal>Marketable: {}</SingleDetailsModal>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-            </div>
-            <div>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-            </div>
-            <div>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-              <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
-            </div>
-          </ModalDetailedInformations>
+          
+            {item.price?.success === true ? (
+            <ModalDetailedInformations>
+              <div>
+                <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+                <SingleDetailsModal>Highest Price: {(Number(item.price.highest_price) * coin).toFixed(2)}</SingleDetailsModal>
+                <SingleDetailsModal>Lowest Price: {(Number(item.price.lowest_price) * coin).toFixed(2)}</SingleDetailsModal>
+              </div>
+              <div>
+                <SingleDetailsModal>Average Price: {(Number(item.price.average_price) * coin).toFixed(2)}</SingleDetailsModal>
+                <SingleDetailsModal>Median Price: {(Number(item.price.median_price) * coin).toFixed(2)}</SingleDetailsModal>
+              </div>
+            </ModalDetailedInformations>
+            ):<ErrorNoData>No data retrieved</ErrorNoData>}
+            
+          
         </StyledContentModal>
       </Modal>
     </>
