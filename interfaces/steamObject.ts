@@ -1,4 +1,4 @@
-import Item from "./item";
+import {Item} from "./item";
 
 export default interface SteamObject {
   assets: Array<Object>;
