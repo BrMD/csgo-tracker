@@ -121,9 +121,9 @@ const ShowItems = () => {
   let arraySearched = [];
   if (searchByName.length > 0) {
       arraySearched = itemsSorted.filter((item) => {
-      item?.market_name.match(searchByName);
+        return item?.name.match(searchByName);
   });
-  console.log(arraySearched)
+  setItemsSorted(arraySearched)
   }
   
 
@@ -165,7 +165,7 @@ const ShowItems = () => {
   if (!itemsCs) {
     return <span>No items has been fatched</span>;
   } else {
-    console.log(currentPage)
+   
     if (!itemsSorted) return <div>No items Found</div>;
 
     let ItemsPerPage = [];

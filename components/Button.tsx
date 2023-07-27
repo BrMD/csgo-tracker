@@ -19,7 +19,7 @@ interface propsReceived{
 
 
 const Button:React.FC<propsReceived> = ({index, onHandleClick, children,currentPage}) => {
-    console.log(index)
+   
   return (
     <StyledButton className={`${currentPage === index ? "activeButton": ""}`} onClick={() => onHandleClick(index)}>{children}</StyledButton>
   )
