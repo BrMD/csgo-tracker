@@ -32,6 +32,7 @@ const StyledMainDiv = styled.div`
 `
 const ShowItems = () => {
   const [itemsCs, setItemsCs] = React.useState<SteamObject>();
+  const itemsss = JSON.parse(sessionStorage.getItem('itemsCs')|| '{}')
   const [coins, setCoins] = React.useState<Coins>();
   const [selectedCoin, setSelectedCoin] = useState("1");
   const [numberItemsPerPage, setNumberItemsPerPage] = useState(16);
@@ -58,7 +59,7 @@ const ShowItems = () => {
   function handleCurrentPage(numPage: number) {
     setCurrentPage(numPage);
   }
-
+  
   function handleOrderby(Order: string) {
     if (!itemsCs) return;
 
@@ -97,14 +98,17 @@ const ShowItems = () => {
     }
     return [...arrayWithPrices, ...arrayNoPrices];
   }
-
+  
   useEffect(
     function () {
       setItemsSorted(handleOrderby(orderBy));
     },
     [orderBy]
   );
-  
+  useEffect(function(){
+    setItemsCs(itemsss);
+    setItemsSorted(itemsss.descriptions);
+  },[])
   // useEffect(function(){
   //   if (!itemsCs) return;
   //   const arraySearch = itemsSorted.find((item) => {
@@ -127,30 +131,30 @@ const ShowItems = () => {
   }
   
 
-  useEffect(
-    function () {
-      const getDynamicProps = async () => {
-        const res = await fetch(`/api/getItemsCs/${search}`);
-        const data = await res.json();
-        arrayItems = data;
-        arrayItems.descriptions.map(
-          async (item) => (item.price = await getPrices(item))
-        );
+  // useEffect(
+  //   function () {
+  //     const getDynamicProps = async () => {
+  //       const res = await fetch(`/api/getItemsCs/${search}`);
+  //       const data = await res.json();
+  //       arrayItems = data;
+  //       arrayItems.descriptions.map(
+  //         async (item) => (item.price = await getPrices(item))
+  //       );
 
-        setItemsCs(arrayItems);
-        setItemsSorted(arrayItems.descriptions);
-      };
-      getDynamicProps();
-    },
-    [search]
-  );
-  const getPrices = async (item: InterfaceItem) => {
-    const res = await fetch(
-      `/api/getPrices/${item.market_name.replaceAll("&", "%26")}`
-    );
-    const data = await res.json();
-    return data;
-  };
+  //       setItemsCs(arrayItems);
+  //       setItemsSorted(arrayItems.descriptions);
+  //     };
+  //     getDynamicProps();
+  //   },
+  //   [search]
+  // );
+  // const getPrices = async (item: InterfaceItem) => {
+  //   const res = await fetch(
+  //     `/api/getPrices/${item.market_name.replaceAll("&", "%26")}`
+  //   );
+  //   const data = await res.json();
+  //   return data;
+  // };
   useEffect(function () {
     const getCurrencys = async () => {
       const res = await fetch(
@@ -165,7 +169,8 @@ const ShowItems = () => {
   if (!itemsCs) {
     return <span>No items has been fatched</span>;
   } else {
-   
+    console.log(itemsCs);
+   console.log(itemsSorted);
     if (!itemsSorted) return <div>No items Found</div>;
 
     let ItemsPerPage = [];
@@ -201,7 +206,7 @@ const ShowItems = () => {
               <option value={32}>32</option>
             </select>
             <select onChange={(e) => setOrderBy(e.target.value)}>
-              <option value={"None"}>none</option>
+              <option value={"None"}>None</option>
               <option value={"HighestPrice"}>HighestPrice</option>
               <option value={"LowestPrice"}>LowestPrice</option>
               <option value={"OrderAZ"}>Order Alphabethic Ascending</option>
