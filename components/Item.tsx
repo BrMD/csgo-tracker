@@ -55,23 +55,8 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
   const onCloseModal = () => setOpen(false);
   const onOpenModal = () => setOpen(true);
 
-  useEffect(
-    function () {
-      if(!item) return;
-      const getPrices = async () => {
-        const res = await fetch(
-          `/api/getPrices/${item.market_name.replaceAll("&", "%26")}`
-        );
-        const data = await res.json();
-        setPrice(data);
-      };
-      getPrices();
-    },
-    [item?.market_name, item]
-  );
-  if(!item) return;
-  if (price ) item.price = price;
-    
+
+  if(item)  
   return (
     <>
       <StyledItem onClick={onOpenModal}>

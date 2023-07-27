@@ -37,7 +37,6 @@ const ShowItems = () => {
   const [selectedCoin, setSelectedCoin] = useState("1");
   const [numberItemsPerPage, setNumberItemsPerPage] = useState(16);
   const [currentPage, setCurrentPage] = useState(0);
-  const [orderBy, setOrderBy] = useState("None");
   const [searchByName, setSearchByName] = useState("")
   const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem | undefined>);
 
@@ -99,24 +98,16 @@ const ShowItems = () => {
     return [...arrayWithPrices, ...arrayNoPrices];
   }
   
-  useEffect(
-    function () {
+  
+    function handleOrder(orderBy:String) {
       setItemsSorted(handleOrderby(orderBy));
-    },
-    [orderBy]
-  );
+    }
+    
   useEffect(function(){
     setItemsCs(itemsss);
     setItemsSorted(itemsss.descriptions);
   },[])
-  // useEffect(function(){
-  //   if (!itemsCs) return;
-  //   const arraySearch = itemsSorted.find((item) => {
-  //     if(item?.market_name.includes(searchByName)) return item
-  //   })
-  //   console.log(arraySearch)
-  //   // setItemsSorted(arraySearch)
-  //   }, [searchByName])
+ 
   const handleSearchParams = (word:string) => {
     if(word === null) return;
     setSearchByName(word);
@@ -129,32 +120,7 @@ const ShowItems = () => {
   });
   setItemsSorted(arraySearched)
   }
-  
 
-  // useEffect(
-  //   function () {
-  //     const getDynamicProps = async () => {
-  //       const res = await fetch(`/api/getItemsCs/${search}`);
-  //       const data = await res.json();
-  //       arrayItems = data;
-  //       arrayItems.descriptions.map(
-  //         async (item) => (item.price = await getPrices(item))
-  //       );
-
-  //       setItemsCs(arrayItems);
-  //       setItemsSorted(arrayItems.descriptions);
-  //     };
-  //     getDynamicProps();
-  //   },
-  //   [search]
-  // );
-  // const getPrices = async (item: InterfaceItem) => {
-  //   const res = await fetch(
-  //     `/api/getPrices/${item.market_name.replaceAll("&", "%26")}`
-  //   );
-  //   const data = await res.json();
-  //   return data;
-  // };
   useEffect(function () {
     const getCurrencys = async () => {
       const res = await fetch(
@@ -205,7 +171,7 @@ const ShowItems = () => {
               <option value={24}>24</option>
               <option value={32}>32</option>
             </select>
-            <select onChange={(e) => setOrderBy(e.target.value)}>
+            <select onChange={(e) => handleOrder(e.target.value)}>
               <option value={"None"}>None</option>
               <option value={"HighestPrice"}>HighestPrice</option>
               <option value={"LowestPrice"}>LowestPrice</option>

@@ -46,12 +46,6 @@ const SearchBar = () => {
   const getDynamicProps = async () => {
     const res = await fetch(`/api/getItemsCs/${steamId}`);
     const data = await res.json();
-    if(data.success === 1){
-      console.log(data);
-      setArrayItemsCs(data);
-    }  
-  
-  
     if (data === null) {
       return toast.error(
         "Error on getting Data from your Steam, please try again with a valid SteamID",
@@ -61,18 +55,11 @@ const SearchBar = () => {
         }
       );
     }
-   
-    const { success } = data;
-    // if (success === 1) {
-    //   toast.success("Data retrieved successfully", {
-    //     position: toast.POSITION.TOP_CENTER,
-    //     autoClose: 1000,
-    //   });
-      
-    //   setTimeout(() => {
-    //     router.push(`/api/ListItems/?key=${steamId}`);
-    //   }, 2000);
-    // }
+    if(data.success === 1){
+      console.log(data);
+      setArrayItemsCs(data);
+    }  
+    
   };
   return (
     <>
