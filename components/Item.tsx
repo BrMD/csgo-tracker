@@ -111,4 +111,4 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
   );
 };
 
-export default Item;
+export default React.memo(Item);

@@ -30,45 +30,67 @@ const StyledMainDiv = styled.div`
   align-items: center;
 
 `
+
+
 const ShowItems = () => {
   const [itemsCs, setItemsCs] = React.useState<SteamObject>();
-  const itemsss = JSON.parse(sessionStorage.getItem('itemsCs')|| '{}')
+  const itemsss = JSON.parse(sessionStorage.getItem('itemsCs')|| '{}');
+  let ItemsPerPage = [];
   const [coins, setCoins] = React.useState<Coins>();
   const [selectedCoin, setSelectedCoin] = useState("1");
   const [numberItemsPerPage, setNumberItemsPerPage] = useState(16);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchByName, setSearchByName] = useState("")
   const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem | undefined>);
+  const [orderBy, setorderBy] = useState("None")
+let auxArray;
+   useEffect(function(){
+    setItemsCs(itemsss);
+    setItemsSorted(itemsss.descriptions);
+    console.log(itemsss);
+    console.log(itemsSorted);
+  },[])
+  
+  function handleOrder(orderBy:string) {
+    setorderBy(orderBy)
+    setItemsSorted(handleOrderby(orderBy));
+  }
+  useEffect(function () {
+    const getCurrencys = async () => {
+      const res = await fetch(
+        "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_ueSLnsniTYleqvyDK9iRiDhO5Ogl9FJOtYoVhdhZ"
+      );
+      const data = await res.json();
+      setCoins(data);
+    };
+    getCurrencys();
+  }, []);
 
-  const searchParams = useSearchParams();
-  const search = searchParams.get("key");
   const router = useRouter();
-  let arrayItems: SteamObject;
-
+  auxArray = itemsss.descriptions;
+  const arrayNoPrices = itemsCs?.descriptions.filter(
+    (item: InterfaceItem) => item.price.success === "false"
+  );
+  
+  const arrayWithPrices = itemsCs?.descriptions.filter(
+    (item: InterfaceItem) => item.price.success === true
+  );
   function handleBack() {
     setItemsCs(undefined);
     setCoins(undefined);
     router.back();
   }
   function handleNumPages(numItemsPages:number){
-    
     setCurrentPage(0);
     setNumberItemsPerPage(numItemsPages)
   }
   function handleCurrentPage(numPage: number) {
     setCurrentPage(numPage);
   }
-  
+
   function handleOrderby(Order: string) {
     if (!itemsCs) return;
-
-    const arrayNoPrices = itemsCs.descriptions.filter(
-      (item: InterfaceItem) => item.price.success === "false"
-    );
-    const arrayWithPrices = itemsCs.descriptions.filter(
-      (item: InterfaceItem) => item.price.success === true
-    );
-    console.log(arrayWithPrices);
+    if(arrayNoPrices === undefined || arrayWithPrices === undefined) return;
     if (Order === "HighestPrice") {
       const highestPrice = sort(arrayWithPrices).desc(
         (item: InterfaceItem) => +item.price.average_price
@@ -97,57 +119,33 @@ const ShowItems = () => {
     }
     return [...arrayWithPrices, ...arrayNoPrices];
   }
-  
-  
-    function handleOrder(orderBy:String) {
-      setItemsSorted(handleOrderby(orderBy));
-    }
-    
-  useEffect(function(){
-    setItemsCs(itemsss);
-    setItemsSorted(itemsss.descriptions);
-  },[])
- 
-  const handleSearchParams = (word:string) => {
-    if(word === null) return;
-    setSearchByName(word);
-  };
-  
-  let arraySearched = [];
-  if (searchByName.length > 0) {
-      arraySearched = itemsSorted.filter((item) => {
-        return item?.name.match(searchByName);
-  });
-  setItemsSorted(arraySearched)
-  }
-
-  useEffect(function () {
-    const getCurrencys = async () => {
-      const res = await fetch(
-        "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_ueSLnsniTYleqvyDK9iRiDhO5Ogl9FJOtYoVhdhZ"
-      );
-      const data = await res.json();
-      setCoins(data);
-    };
-    getCurrencys();
-  }, []);
-
   if (!itemsCs) {
     return <span>No items has been fatched</span>;
   } else {
-    console.log(itemsCs);
-   console.log(itemsSorted);
     if (!itemsSorted) return <div>No items Found</div>;
-
-    let ItemsPerPage = [];
-    for (
-      let index = 0;
-      index < itemsSorted.length;
-      index += numberItemsPerPage
-    ) {
-      ItemsPerPage.push(itemsSorted.slice(index, index + numberItemsPerPage));
+    
+    if(searchByName!==''){
+      if(orderBy!=='None') auxArray = handleOrderby(orderBy);
+      auxArray = auxArray.filter((item:InterfaceItem) => item.name.toLowerCase().includes(searchByName.toLowerCase()));
+      
+      for (
+        let index = 0;
+        index < auxArray.length;
+        index += numberItemsPerPage
+      ) {
+        ItemsPerPage.push(auxArray.slice(index, index + numberItemsPerPage));
+      }
+    }else{
+      for (
+        let index = 0;
+        index < itemsSorted.length;
+        index += numberItemsPerPage
+      ) {
+        ItemsPerPage.push(itemsSorted.slice(index, index + numberItemsPerPage));
+      }
     }
-
+    console.log(ItemsPerPage)
+    
     return (
       <StyledMainDiv>
         {coins?.data && (
@@ -177,9 +175,8 @@ const ShowItems = () => {
               <option value={"LowestPrice"}>LowestPrice</option>
               <option value={"OrderAZ"}>Order Alphabethic Ascending</option>
               <option value={"OrderZA"}>Order Alphabethic Descending</option>
-              
             </select>
-            <input type="text" onChange={(e) => handleSearchParams(e.target.value)}/>
+            <input type="text" onChange={(e) => setSearchByName(e.target.value)}/>
           </StyledFixed>
         )}
         <StyledItems>
