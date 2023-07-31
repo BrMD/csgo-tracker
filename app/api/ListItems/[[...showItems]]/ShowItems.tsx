@@ -12,15 +12,11 @@ import AuxBar from "@/components/AuxBar";
 
 
 
-const StyledFixed = styled.div`
-  position: fixed;
-  left: 5%;
-  top: 1%;
-`;
 const StyledMainDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 15px;
 
 `
 
@@ -35,7 +31,7 @@ const ShowItems = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchByName, setSearchByName] = useState("")
   const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem | undefined>);
-  const [orderBy, setorderBy] = useState("None")
+  const [orderBy, setorderBy] = useState("None");
   let auxArray;
    useEffect(function(){
     setItemsCs(itemsss);
@@ -62,10 +58,10 @@ const ShowItems = () => {
   const arrayNoPrices = itemsCs?.descriptions.filter(
     (item: InterfaceItem) => item.price.success === "false"
   );
-  
   const arrayWithPrices = itemsCs?.descriptions.filter(
     (item: InterfaceItem) => item.price.success === true
   );
+
   function handleBack() {
     setItemsCs(undefined);
     setCoins(undefined);
@@ -132,7 +128,7 @@ const ShowItems = () => {
       }    
     return (
       <StyledMainDiv>
-        <AuxBar handleCoin={handleCoin} coins={coins} handleBack={handleBack} handleNumPages={handleNumPages} handleOrder={handleOrder} handleSearch={handleSearch}/>
+        <AuxBar handleCoin={handleCoin}  coins={coins}  handleBack={handleBack} handleNumPages={handleNumPages} handleOrder={handleOrder} handleSearch={handleSearch}/>
         <ItemsShow ItemsPerPage={ItemsPerPage} currentPage={currentPage} selectedCoin={selectedCoin} onHandleCurrentPage={handleCurrentPage}/>
       </StyledMainDiv>
     );
