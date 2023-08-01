@@ -1,6 +1,5 @@
 "use client";
-import { useSearchParams, useRouter } from "next/navigation";
-import Item from "@/components/Item";
+import { useRouter } from "next/navigation";
 import SteamObject from "@/interfaces/steamObject";
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";

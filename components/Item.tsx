@@ -19,6 +19,10 @@ const StyledItem = styled.div`
   align-items: center;
   cursor: pointer;
   font-size: 16px;
+  &:hover{
+    background-color: #474646;
+  }
+  text-align: center;
 `;
 
 const StyledContentModal = styled.div`
@@ -36,6 +40,7 @@ const ModalDetailedInformations = styled.div`
 `;
 const SingleDetailsModal = styled.div`
   padding: 10px;
+  display: flex;
 `;
 const ErrorNoData = styled.div`
   grid-column-start: 0;
@@ -48,10 +53,16 @@ const ErrorSpan = styled.span`
   font-weight: 500;
   color: #ffffff;
 `;
-
+const StyledH4 = styled.h4`
+  margin: 8px 12px 5px 12px;
+  font-weight: 600;
+`
+const StyledH5 = styled.h5`
+  
+`
 const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
   
-  const [price, setPrice] = React.useState<Price>();
+
   const [open, setOpen] = useState(false);
   const onCloseModal = () => setOpen(false);
   const onOpenModal = () => setOpen(true);
@@ -61,7 +72,7 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
   return (
     <>
       <StyledItem onClick={onOpenModal}>
-        <span>{item.name}</span>
+        <StyledH4>{item.name}</StyledH4>
         <div>
           <ImageLoading
             alt={`${item.name}`}
@@ -83,7 +94,7 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
       </StyledItem>
       <Modal open={open} onClose={onCloseModal} styles={{modal: {background:"#333232", borderRadius: "15px"}, closeButton: {display: "none"}}} >
         <StyledContentModal>
-          <h4>{item.name}</h4>
+          <h2>{item.name}</h2>
           <ImageLoading
             alt={`${item.name}`}
             href={`${item.icon_url}`}
@@ -94,7 +105,7 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
             {item.price?.success === true ? (
             <ModalDetailedInformations>
               <div>
-                <SingleDetailsModal>Type: {item.type}</SingleDetailsModal>
+                <SingleDetailsModal><StyledH5>Type:</StyledH5> <div>{item.type}</div></SingleDetailsModal>
                 <SingleDetailsModal>Highest Price: {(Number(item.price.highest_price) * coin).toFixed(2)}</SingleDetailsModal>
                 <SingleDetailsModal>Lowest Price: {(Number(item.price.lowest_price) * coin).toFixed(2)}</SingleDetailsModal>
               </div>

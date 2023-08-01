@@ -9,7 +9,7 @@ const StyledItems = styled.div`
   height: 96%;
   margin: 30px;
   border-radius: 10px;
-  background-color: #4e4e4e;
+  background-color: #5a5a5a;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 `;
