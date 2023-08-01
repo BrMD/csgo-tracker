@@ -18,6 +18,7 @@ const StyledItem = styled.div`
   justify-content: space-evenly;
   align-items: center;
   cursor: pointer;
+  font-size: 16px;
 `;
 
 const StyledContentModal = styled.div`
