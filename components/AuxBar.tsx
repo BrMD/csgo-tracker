@@ -18,7 +18,7 @@ const StyledDiv = styled.div`
 
 const StyledSelect = styled.select`
     margin: 0px 10px 0px 10px;
-    border: 1px solid #929292;
+    border: 1px solid #ffffff;
     background-color: #37c2c2c1;
     color: #fff;
     text-align: center;
@@ -34,7 +34,33 @@ const StyledSelect = styled.select`
 const StyledSelect7em = styled(StyledSelect)`
     width: 7em;
 `
+const StyledButton = styled.button`
+    margin-right: 6%;
+    width: 10em;
+    border-radius: 10px;
+    background-color: #37c2c2c1;
+    border:none;
+    color: #fff;
+    &:hover{
+        background-color: #248b8bc1;
+    }
+    cursor: pointer;
+    transition: background-color 0.4s;
+    border: 1px solid #fff;
+`
 
+const StyledInput = styled.input`
+    height: 35px;
+    border-radius: 10px;
+    text-align: center;
+    align-self: center;
+    background-color: #37c2c2c1;
+    color:white;
+    border: 1px solid #fff;
+    &:focus{
+        outline:none;
+    }
+`
 
 const AuxBar = ({handleCoin, coins,handleBack, handleNumPages, handleOrder,handleSearch}:
 {handleCoin:Function;coins:Coins|undefined; handleBack:Function;handleNumPages:Function;handleOrder:Function;handleSearch:Function}) => {
@@ -65,8 +91,8 @@ const AuxBar = ({handleCoin, coins,handleBack, handleNumPages, handleOrder,handl
             </StyledSelect>
         </StyledDiv>
         <StyledDiv>
-            <button onClick={() => handleBack}>Back to Home</button>
-            <input type="text" onChange={(e) => handleSearch(e.target.value)}/>
+            <StyledButton onClick={() => handleBack}>Back to Home</StyledButton>
+            <StyledInput placeholder='Search By name' type="text" onChange={(e:React.ChangeEvent<any>) => handleSearch(e.target.value)}/>
         </StyledDiv>
     </StyledFixed>
   )

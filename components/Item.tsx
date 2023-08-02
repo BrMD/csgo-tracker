@@ -35,8 +35,7 @@ const StyledContentModal = styled.div`
 `;
 const ModalDetailedInformations = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, minmax(50px, 1fr));
-  
+  grid-template-columns: repeat(2, minmax(50px, 1fr)); 
 `;
 const SingleDetailsModal = styled.div`
   padding: 10px;
@@ -46,8 +45,9 @@ const ErrorNoData = styled.div`
   grid-column-start: 0;
   grid-column-end: 2;
 `;
-const SucessSpan = styled.span`
-  color: #96f022;
+const StyledSpan = styled.span`
+  /* color: #96f022; */
+  color: ${props => props.color ? props.color : "#fff"};
 `;
 const ErrorSpan = styled.span`
   font-weight: 500;
@@ -56,9 +56,6 @@ const ErrorSpan = styled.span`
 const StyledH4 = styled.h4`
   margin: 8px 12px 5px 12px;
   font-weight: 600;
-`
-const StyledH5 = styled.h5`
-  
 `
 const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
   
@@ -83,10 +80,10 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
         </div>
         <div>
           {item.price?.success === true ? (
-            <SucessSpan>
+            <StyledSpan color={"#96f022"}>
               Average Price:{" "}
               {(Number(item.price.average_price) * coin).toFixed(2)}
-            </SucessSpan>
+            </StyledSpan>
           ) : (
             <ErrorSpan>No price available</ErrorSpan>
           )}
@@ -98,20 +95,24 @@ const Item = ({ item, coin }: { item: Item|undefined; coin: number }) => {
           <ImageLoading
             alt={`${item.name}`}
             href={`${item.icon_url}`}
-            width={150}
+            width={150} 
             height={150}
           />
           
             {item.price?.success === true ? (
             <ModalDetailedInformations>
               <div>
-                <SingleDetailsModal><StyledH5>Type:</StyledH5> <div>{item.type}</div></SingleDetailsModal>
-                <SingleDetailsModal>Highest Price: {(Number(item.price.highest_price) * coin).toFixed(2)}</SingleDetailsModal>
-                <SingleDetailsModal>Lowest Price: {(Number(item.price.lowest_price) * coin).toFixed(2)}</SingleDetailsModal>
+                <SingleDetailsModal><StyledSpan color={"#bddd2d"}>Type:&nbsp;</StyledSpan> <StyledSpan>{item.type}</StyledSpan></SingleDetailsModal>
+                <SingleDetailsModal><StyledSpan color={"#3c8ad3"}>Highest Price:&nbsp;</StyledSpan> <StyledSpan>{(Number(item.price.highest_price) * coin).toFixed(2)}</StyledSpan></SingleDetailsModal>
+                
+                <SingleDetailsModal><StyledSpan color={"#cc5cbd"}>Lowest Price:&nbsp;</StyledSpan> <StyledSpan>{(Number(item.price.lowest_price) * coin).toFixed(2)}</StyledSpan></SingleDetailsModal>
+                
               </div>
               <div>
-                <SingleDetailsModal>Average Price: {(Number(item.price.average_price) * coin).toFixed(2)}</SingleDetailsModal>
-                <SingleDetailsModal>Median Price: {(Number(item.price.median_price) * coin).toFixed(2)}</SingleDetailsModal>
+              <SingleDetailsModal><StyledSpan color={"#96f022"}>Average Price:&nbsp;</StyledSpan> <StyledSpan>{(Number(item.price.average_price) * coin).toFixed(2)}</StyledSpan></SingleDetailsModal>
+                
+              <SingleDetailsModal><StyledSpan color={"#ff7b00"}>Average Price:&nbsp;</StyledSpan> <StyledSpan>{(Number(item.price.median_price) * coin).toFixed(2)}</StyledSpan></SingleDetailsModal>
+                
               </div>
             </ModalDetailedInformations>
             ):<ErrorNoData>No data retrieved</ErrorNoData>}
