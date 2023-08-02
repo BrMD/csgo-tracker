@@ -62,6 +62,7 @@ const ShowItems = () => {
   );
 
   function handleBack() {
+    console.log("aqui");
     setItemsCs(undefined);
     setCoins(undefined);
     router.back();

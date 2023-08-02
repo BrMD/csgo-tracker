@@ -100,7 +100,7 @@ const AuxBar = ({handleCoin, coins,handleBack, handleNumPages, handleOrder,handl
             </StyledSelect>
         </StyledDiv>
         <StyledDiv>
-            <StyledButton onClick={() => handleBack}>Back to Home</StyledButton>
+            <StyledButton onClick={handleBack}>Back to Home</StyledButton>
             <StyledInput placeholder='Search By name' type="text" onChange={(e:React.ChangeEvent<any>) => handleSearch(e.target.value)}/>
         </StyledDiv>
     </StyledFixed>

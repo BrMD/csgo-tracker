@@ -30,8 +30,8 @@
 }
 body {
   font-weight: 500;
-
-  background-color: #032e47;
+  background-image: url("../backgroundskins.png");
+  /* background-color: #032e47; */
 }
 .layout {
   max-width: 100vw;

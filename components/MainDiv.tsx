@@ -21,7 +21,7 @@ const variations = {
     color: #319cda;
   `,
   teste2: css`
-    background-color: #032e47;
+    background-color: #032e470;
     color: #62cf22;
   `,
 };
