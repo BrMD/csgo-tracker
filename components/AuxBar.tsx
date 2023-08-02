@@ -38,7 +38,7 @@ const StyledButton = styled.button`
     margin-right: 6%;
     width: 10em;
     border-radius: 10px;
-    background-color: #37c2c2c1;
+    background-color: #37c2c2c1 ;
     border:none;
     color: #fff;
     &:hover{
@@ -61,12 +61,20 @@ const StyledInput = styled.input`
         outline:none;
     }
 `
+const StyledH4 = styled.h4`
+    color: #fff;
+    align-self: center;
+    margin-left: 10px;
+    font-weight: 900;
+    font-family: roboto;
+`
 
 const AuxBar = ({handleCoin, coins,handleBack, handleNumPages, handleOrder,handleSearch}:
 {handleCoin:Function;coins:Coins|undefined; handleBack:Function;handleNumPages:Function;handleOrder:Function;handleSearch:Function}) => {
     return (
     <StyledFixed>
         <StyledDiv>
+            <StyledH4>Currency</StyledH4>
             <StyledSelect7em className='selectWidth' onChange={(e:React.ChangeEvent<any>) => handleCoin(e.target.value)} defaultValue={"USD"}>
                 <option value={"1"}>{"USD"}</option>
                 {coins && Object.entries(coins.data).map((currency, index) =>
@@ -76,12 +84,13 @@ const AuxBar = ({handleCoin, coins,handleBack, handleNumPages, handleOrder,handl
                             
                 )}
             </StyledSelect7em>
-            
+            <StyledH4>Page items</StyledH4>
             <StyledSelect7em className='selectWidth' onChange={(e:React.ChangeEvent<any>) => handleNumPages(+e.target.value)}>
                 <option value={16}>16</option>
                 <option value={24}>24</option>
                 <option value={32}>32</option>
             </StyledSelect7em>
+            <StyledH4>Sorting method</StyledH4>
             <StyledSelect onChange={(e:React.ChangeEvent<any>) => handleOrder(e.target.value)}>
                 <option value={"None"}>None</option>
                 <option value={"HighestPrice"}>HighestPrice</option>
