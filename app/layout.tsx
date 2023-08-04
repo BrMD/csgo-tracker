@@ -1,3 +1,4 @@
+import Image from "next/image";
 import "./globals.css";
 
 export const metadata = {
@@ -12,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg">
       <div className="layout">{children}</div>
       </body>
     </html>
