@@ -40,7 +40,7 @@ First Screen show only an Welcome message to the user and a Link if he dosen't k
 
 ![Screenshot_20230808_122527](https://github.com/BrMD/csgo-tracker/assets/40863744/50e1721a-b7f5-4278-b835-b64515dfc8e5)
 
-if is all good and the system has fetched his data and prices,the API used to get the data inventory is from steam(https://steamcommunity.com/inventory/{USER STEAMID}/730/2), after fetched his items other API is called and make a map method to go through the array of items and appending a Price Object to the ItemObject(http://csgobackpack.net/api/GetItemPrice/?currency=USD&id={NAMEITEM}), after all this steps the user is redirected to the main page of the application where all the data is getted by the cache of browser and runs another API to get the currencys(https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_ueSLnsniTYleqvyDK9iRiDhO5Ogl9FJOtYoVhdhZ).
+If is all good and the system has fetched his data and prices,the API used to get the data inventory is from steam(https://steamcommunity.com/inventory/{USER STEAMID}/730/2), after fetched his items other API is called and make a map method to go through the array of items and appending a Price Object to the ItemObject(http://csgobackpack.net/api/GetItemPrice/?currency=USD&id={NAMEITEM}), after all this steps the user is redirected to the main page of the application where all the data is getted by the cache of browser and runs another API to get the currencys(https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_ueSLnsniTYleqvyDK9iRiDhO5Ogl9FJOtYoVhdhZ).
 
 ![Screenshot_20230808_121832](https://github.com/BrMD/csgo-tracker/assets/40863744/4051d7e1-e0cd-440b-8693-9a7ca94082ae)
 
