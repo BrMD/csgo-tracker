@@ -104,7 +104,6 @@ const SearchBar = () => {
       );
     }
     if(data.success === 1){
-      console.log(data);
       setArrayItemsCs(data);
     }  
     
