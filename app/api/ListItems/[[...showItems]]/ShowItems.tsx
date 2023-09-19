@@ -39,7 +39,9 @@ const ShowItems = () => {
   
   function handleOrder(orderBy:string) {
     setorderBy(orderBy)
-    if(orderBy !==) setItemsSorted(handleOrderby(orderBy));
+    if(orderBy !== undefined){
+      setItemsSorted(handleOrderby(orderBy))
+    };
   }
   useEffect(function () {
     const getCurrencys = async () => {
