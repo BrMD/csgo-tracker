@@ -1,6 +1,6 @@
-import { NextApiRequest } from "next";
+import { NextRequest } from "next";
 
-export const GET = async (request: NextApiRequest, { params }: any) => {
+export const GET = async (request: NextRequest, { params }: any) => {
   try {
     const res = await fetch(
       `http://csgobackpack.net/api/GetItemPrice/?currency=USD&id=${params.name}`
