@@ -29,7 +29,7 @@ const ShowItems = () => {
   const [numberItemsPerPage, setNumberItemsPerPage] = useState(16);
   const [currentPage, setCurrentPage] = useState(0);
   const [searchByName, setSearchByName] = useState("")
-  const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem | undefined>);
+  const [itemsSorted, setItemsSorted] = useState(Array<InterfaceItem>);
   const [orderBy, setorderBy] = useState("None");
   let auxArray;
    useEffect(function(){
